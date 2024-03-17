@@ -11,19 +11,26 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer trailRenderer;
 
-    public float moveSpeed = 1.0f;
+    public float moveSpeed = 2.0f;
+    public float baseMoveSpeed = 2.0f;
+    public float moveSpeedIncreased = 3.0f;
+
     public float circleRadius;
     public Vector2 thingPosition = new Vector2(0f, 0f);
 
     public Color blue;
     public Color magenta;
 
+    public bool keyDown;
+    
+
     public Transform moveHandles;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        keyDown = false;
+        moveSpeed = baseMoveSpeed;
     }
 
     // Update is called once per frame
@@ -39,6 +46,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
+            //if (keyDown == false)
+            //{
+                
+            //    keyDown = true;
+            //}
+            
+            moveSpeed = moveSpeedIncreased;
+
             spriteRenderer.color = blue;
             trailRenderer.startColor = blue;
 
@@ -46,6 +61,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space))
         {
+            //if (keyDown == true)
+            //{
+
+            //    keyDown = false;
+            //}
+
+            moveSpeed = baseMoveSpeed;
+
             spriteRenderer.color = magenta;
             trailRenderer.startColor = magenta;
             
@@ -57,4 +80,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.MovePosition(thingPosition);
     }
+
+
 }

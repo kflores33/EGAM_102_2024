@@ -123,19 +123,19 @@ public class ThingSpawner : MonoBehaviour
             }
 
             // give the prefab its component
-            if (spawnPrefab.GetComponent<DangerThingScript>() == null)
+            if (spawnPrefab2.GetComponent<DangerThingScript>() == null)
             {
-                spawnPrefab.GetComponent<ThingScript>().healthManager = healthManager;
+                spawnPrefab2.GetComponent<ThingScript>().healthManager = healthManager;
             }
-            else if (spawnPrefab.GetComponent<DangerThingScript>() != null)
+            else if (spawnPrefab2.GetComponent<DangerThingScript>() != null)
             {
-                spawnPrefab.GetComponent<DangerThingScript>().healthManager = healthManager;
+                spawnPrefab2.GetComponent<DangerThingScript>().healthManager = healthManager;
             }
 
             GameObject newObject = Instantiate(spawnPrefab2);
             newObject.transform.position = newPosition;
 
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(4f);
         }
     }
 

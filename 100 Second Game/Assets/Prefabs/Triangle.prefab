@@ -181,10 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3243110f37e4e7040bf8968166083f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   rb: {fileID: 6302945913025807603}
   triggerCollider: {fileID: 1391541469085324283}
   spriteRenderer: {fileID: 7323084606190481828}
-  isTouched: 0
+  isTouchedBad: 0
+  isTouchedGood: 0
   isActive: 0
   speed: 10
   delay: 0
@@ -227,7 +229,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2259023891372780341}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8817d19516a02eb48b049c176efcf129, type: 2}
   m_CullingMode: 0

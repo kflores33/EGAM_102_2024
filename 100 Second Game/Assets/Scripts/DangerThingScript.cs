@@ -1,15 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static ThingScript;
 
 public class DangerThingScript : MonoBehaviour
 {
+    public enum ThingStates
+    {
+        Spawn,
+        Set
+    }
+
+    public ThingStates currentState;
+
     public Rigidbody2D rb;
     public PolygonCollider2D triggerCollider;
     public SpriteRenderer spriteRenderer;
 
-    public bool isTouched;
+    public bool isTouchedBad;
+    public bool isTouchedGood;
+
     public bool isActive;
     public float speed;
     public float delay;
@@ -25,47 +36,68 @@ public class DangerThingScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //isActive = false;
-        //triggerCollider.enabled = false;
+        delay = 1f;
+        currentState = ThingStates.Spawn;
 
         transform.Rotate(0, 0, Random.Range(0, 360));
         spriteRenderer.color = red;
 
         //Apply a force to push the asteroid foward
         rb.AddForce(transform.up * speed);
-
-        //delayCoroutine = StartCoroutine(Delay());
+        
+        triggerCollider.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer.hasWon == true)
+        switch (currentState)
         {
-            //Destroy(triggerCollider);
-        }
+            case ThingStates.Spawn:
+                UpdateSpawn();
 
-        //if (isActive == true)
-        //{
-        //    StopAllCoroutines();
-        //}
+                break;
+            case ThingStates.Set:
+                UpdateSet();
+
+                break;
+        }
+    }
+
+    void UpdateSpawn()
+    {
+        delay -= Time.deltaTime;
+        if (delay < 0)
+        {
+            currentState = ThingStates.Set;
+            triggerCollider.enabled = true;
+        }
+    }
+
+    void UpdateSet()
+    {
+        if (isTouchedBad)
+        {
+            healthManager.healthCount -= 1;
+            //spriteRenderer.color = touched;
+            Destroy(this.gameObject);
+        }
+        if (isTouchedGood)
+        {
+            //spriteRenderer.color = touched;
+            Destroy(this.gameObject);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Player") && timer.hasWon == false)
         {
-            //isTouched = true;
-            healthManager.healthCount -= 1;
-            spriteRenderer.color = touched;
-            Destroy(this);
-
+            isTouchedBad = true;
         }
         if (col.gameObject.CompareTag("PlayerBlue"))
         {
-            //isTouched = true;
-            spriteRenderer.color = touched;
-            Destroy(this);
+            isTouchedGood = true;
         }
     }
 
@@ -79,9 +111,7 @@ public class DangerThingScript : MonoBehaviour
     //    }
     //    if (col.gameObject.CompareTag("PlayerBlue"))
     //    {
-    //        //isTouched = false;
-    //        spriteRenderer.color = red;
-    //        Destroy(this);
+    //        isTouchedGood = false;
     //    }
     //}
 

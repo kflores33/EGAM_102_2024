@@ -27,6 +27,7 @@ public class ThingScript : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D rb;
+    public PolygonCollider2D triggerCollider;
 
     public Coroutine greenToRedCoroutine;
     public Coroutine startCoroutine;
@@ -41,6 +42,7 @@ public class ThingScript : MonoBehaviour
     public bool animationStarted;
     public bool hasDied;
     public PlayerHealth healthManager;
+    public Timer timer;
 
     //
 
@@ -94,11 +96,17 @@ public class ThingScript : MonoBehaviour
         IEnumerator ExecuteStartTimer()
         {
             yield return new WaitForSeconds(Random.Range(1.9f,3.9f));
-            animator.SetTrigger("SwitchStates");
+            //animator.SetTrigger("SwitchStates");
 
             yield return new WaitForSeconds(0.1f);
             currentState = ThingStates.AtRisk;
             //Debug.Log("entering at risk state");
+        }
+
+        if (timer.hasWon == true)
+        {
+            Destroy(triggerCollider);
+            StopAllCoroutines();
         }
     }
     private void UpdateAtRisk()
@@ -163,6 +171,13 @@ public class ThingScript : MonoBehaviour
             canSwitch = true;
             currentState = ThingStates.Good;
         }
+
+        if (timer.hasWon == true)
+        {
+            currentState = ThingStates.Good;
+            Destroy(triggerCollider);
+            StopAllCoroutines();
+        }
     }
     private void UpdateDead()
     {
@@ -171,13 +186,19 @@ public class ThingScript : MonoBehaviour
 
         spriteRenderer.color = Color.black;
 
-        if (hasDied == false)
+        if (hasDied == false && timer.hasWon == false)
         {
             healthManager.healthCount -= 1;
             hasDied = true;
             Destroy(this);
         }
-        
+
+        if (timer.hasWon == true)
+        {
+            currentState = ThingStates.Good;
+            Destroy(triggerCollider);
+        }
+
         Destroy(gameObject);
     }
 

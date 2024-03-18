@@ -9,6 +9,7 @@ public class ThingSpawner : MonoBehaviour
 
     public GameObject gameOver;
     public PlayerHealth healthManager;
+    public Timer timer;
 
     public Coroutine spawnSquareCoroutine;
     public Coroutine spawnTriangleCoroutine;
@@ -22,6 +23,8 @@ public class ThingSpawner : MonoBehaviour
     public List<GameObject> shapePrefabList;
 
     public bool triangleSpawnStarted;
+
+    public AudioSource spawnSound;
 
     //public float thing;
 
@@ -69,12 +72,16 @@ public class ThingSpawner : MonoBehaviour
             if (spawnPrefab.GetComponent<ThingScript>() == null)
             {
                 spawnPrefab.GetComponent<DangerThingScript>().healthManager = healthManager;
+                spawnPrefab.GetComponent<DangerThingScript>().timer = timer;
             }
             else if (spawnPrefab.GetComponent<ThingScript>() != null)
             {
                 spawnPrefab.GetComponent<ThingScript>().healthManager = healthManager;
+                spawnPrefab.GetComponent<ThingScript>().timer = timer;
             }
-            
+
+            //spawnSound.pitch = UnityEngine.Random.Range(1, 1.5f);
+            //spawnSound.Play();
             GameObject newObject = Instantiate(spawnPrefab);
             newObject.transform.position = newPosition;
 
@@ -126,12 +133,16 @@ public class ThingSpawner : MonoBehaviour
             if (spawnPrefab2.GetComponent<DangerThingScript>() == null)
             {
                 spawnPrefab2.GetComponent<ThingScript>().healthManager = healthManager;
+                spawnPrefab2.GetComponent<ThingScript>().timer = timer;
             }
             else if (spawnPrefab2.GetComponent<DangerThingScript>() != null)
             {
                 spawnPrefab2.GetComponent<DangerThingScript>().healthManager = healthManager;
+                spawnPrefab2.GetComponent<DangerThingScript>().timer = timer;
             }
 
+            //spawnSound.pitch = UnityEngine.Random.Range(1, 1.5f);
+            //spawnSound.Play();
             GameObject newObject = Instantiate(spawnPrefab2);
             newObject.transform.position = newPosition;
 
@@ -139,5 +150,11 @@ public class ThingSpawner : MonoBehaviour
         }
     }
 
-
+    private void Update()
+    {
+        if (timer.hasWon == true)
+        {
+            StopAllCoroutines();
+        }
+    }
 }

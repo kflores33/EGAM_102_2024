@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 7323084606190481828}
   - component: {fileID: 5190115329072582200}
   - component: {fileID: 6302945913025807603}
+  - component: {fileID: -6596456006909423491}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: IgnoredByPlayer
@@ -181,12 +182,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6302945913025807603}
+  triggerCollider: {fileID: 1391541469085324283}
   spriteRenderer: {fileID: 7323084606190481828}
   isTouched: 0
+  isActive: 0
   speed: 10
-  red: {r: 0.8235294, g: 0, b: 0, a: 1}
-  touched: {r: 0.40161723, g: 0, b: 0, a: 0}
+  delay: 0
+  red: {r: 0.31536376, g: 0, b: 0, a: 1}
+  touched: {r: 0.20754701, g: 0, b: 0, a: 0}
   healthManager: {fileID: 0}
+  timer: {fileID: 0}
 --- !u!50 &6302945913025807603
 Rigidbody2D:
   serializedVersion: 4
@@ -214,6 +219,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &-6596456006909423491
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259023891372780341}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8817d19516a02eb48b049c176efcf129, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4012707934665034569
 GameObject:
   m_ObjectHideFlags: 0

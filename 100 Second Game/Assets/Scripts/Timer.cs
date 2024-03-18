@@ -9,19 +9,25 @@ public class Timer : MonoBehaviour
 {
     public float timeRemaining = 100;
     public bool timerIsRunning = false;
+    public bool hasWon;
 
     public GameObject winScreen;
     public TMP_Text winText;
+    public GameObject winAnimationObject;
 
     public Slider sliderTimer;
     public TMP_Text timeText;
 
     public Color green;
 
+    public AudioSource winAudio;
+    public Animator winAnimation;
+
     private void Start()
     {
         // Starts the timer automatically
         timerIsRunning = true;
+        hasWon = false;
 
         sliderTimer.maxValue = timeRemaining;
         sliderTimer.value = timeRemaining;
@@ -63,17 +69,17 @@ public class Timer : MonoBehaviour
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
+                hasWon = true;
 
-                Time.timeScale = 0;
+                
                 winText.text = "Win!!!";
                 winText.color = green;
                 winScreen.SetActive(true);
+                winAnimationObject.SetActive(true);
+                winAnimation.SetTrigger("heaven1");
+                winAudio.Play();
+                //Time.timeScale = 0;
             }
-        }
-        //end game and display lose screen
-        else
-        {
-
         }
     }
 
